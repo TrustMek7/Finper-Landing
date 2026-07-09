@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Stats } from './components/Stats';
@@ -31,6 +32,7 @@ export function App() {
         <CTA selectedPlan={selectedPlan} onPlanChange={setSelectedPlan} />
       </main>
       <Footer />
+      <Analytics />
     </div>);
 
 }
