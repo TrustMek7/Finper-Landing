@@ -1,6 +1,7 @@
 import React from 'react';
 import { PhoneMockup } from './PhoneMockup';
 import { FadeInSection } from './FadeInSection';
+import { trackEvent } from '../lib/analytics';
 
 const SHOWCASE = [
 {
@@ -41,7 +42,7 @@ const SHOWCASE = [
 
 export function Mockups() {
   return (
-    <section className="bg-finper-dark py-24 overflow-hidden">
+    <section id="app" className="bg-finper-dark py-24 overflow-hidden">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <FadeInSection className="text-center max-w-2xl mx-auto mb-20">
           <span className="text-xs font-semibold uppercase tracking-widest text-finper-accent">
@@ -61,9 +62,19 @@ export function Mockups() {
                 className={`flex flex-col ${reversed ? 'sm:flex-row-reverse' : 'sm:flex-row'} items-center gap-10 sm:gap-16`}>
 
                 <FadeInSection className="shrink-0">
-                  <PhoneMockup
-                    src={item.src}
-                    alt={`Pantalla de ${item.label}`} />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      trackEvent('mockup_click', {
+                        screen: item.label,
+                        location: 'mockups_section',
+                      })
+                    }
+                    className="rounded-[2.5rem] focus:outline-none focus:ring-2 focus:ring-finper-accent/60">
+                    <PhoneMockup
+                      src={item.src}
+                      alt={`Pantalla de ${item.label}`} />
+                  </button>
 
                 </FadeInSection>
 

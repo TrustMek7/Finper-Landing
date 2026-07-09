@@ -1,11 +1,11 @@
 import React from 'react';
-import { Download, Mic2, LineChart } from 'lucide-react';
+import { ClipboardList, Mic2, LineChart } from 'lucide-react';
 import { FadeInSection } from './FadeInSection';
 const STEPS = [
 {
-  icon: Download,
-  title: 'Descarga FinPer',
-  description: 'Instala la app en tu celular Android en menos de un minuto.'
+  icon: ClipboardList,
+  title: 'Unete a la lista de espera',
+  description: 'Elige el plan que te interesa y deja un contacto básico.'
 },
 {
   icon: Mic2,
@@ -14,14 +14,14 @@ const STEPS = [
 },
 {
   icon: LineChart,
-  title: 'Ve tu situación financiera al instante',
+  title: 'Valida el control financiero que necesitas',
   description:
-  'FinPer organiza y muestra todo en gráficos fáciles de entender.'
+  'FinPer priorizará las funciones con mayor interés antes de escalar el MVP.'
 }];
 
 export function HowItWorks() {
   return (
-    <section className="bg-finper-bg py-24">
+    <section id="como-funciona" className="bg-finper-bg py-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <FadeInSection className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs font-semibold uppercase tracking-widest text-finper-primary">

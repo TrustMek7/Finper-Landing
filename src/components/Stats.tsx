@@ -30,7 +30,7 @@ const STATS = [
 
 export function Stats() {
   return (
-    <section className="bg-finper-dark py-20 sm:py-24">
+    <section id="problema" className="bg-finper-dark py-20 sm:py-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <FadeInSection className="text-center mb-14">
           <h2 className="text-2xl sm:text-3xl font-bold text-white">
