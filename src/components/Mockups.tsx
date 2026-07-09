@@ -1,6 +1,7 @@
 import React from 'react';
 import { PhoneMockup } from './PhoneMockup';
 import { FadeInSection } from './FadeInSection';
+import { trackEvent } from '../lib/analytics';
 
 const SHOWCASE = [
 {
@@ -61,9 +62,19 @@ export function Mockups() {
                 className={`flex flex-col ${reversed ? 'sm:flex-row-reverse' : 'sm:flex-row'} items-center gap-10 sm:gap-16`}>
 
                 <FadeInSection className="shrink-0">
-                  <PhoneMockup
-                    src={item.src}
-                    alt={`Pantalla de ${item.label}`} />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      trackEvent('mockup_click', {
+                        screen: item.label,
+                        location: 'mockups_section',
+                      })
+                    }
+                    className="rounded-[2.5rem] focus:outline-none focus:ring-2 focus:ring-finper-accent/60">
+                    <PhoneMockup
+                      src={item.src}
+                      alt={`Pantalla de ${item.label}`} />
+                  </button>
 
                 </FadeInSection>
 

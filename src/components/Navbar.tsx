@@ -5,7 +5,9 @@ import {
   useScroll,
   useMotionValueEvent } from
 'framer-motion';
-import { Download, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
+
 const NAV_LINKS = [
 {
   label: 'Características',
@@ -16,7 +18,7 @@ const NAV_LINKS = [
   href: '#precios'
 },
 {
-  label: 'Descargar',
+  label: 'Lista de espera',
   href: '#descargar'
 }];
 
@@ -40,6 +42,18 @@ export function Navbar() {
   useEffect(() => {
     if (mobileOpen) setHidden(false);
   }, [mobileOpen]);
+
+  const handleWaitlistClick = (location: string) => {
+    trackEvent('cta_click', {
+      location,
+      label: 'Unirme a la lista de espera',
+    });
+    trackEvent('download_click', {
+      location,
+      action: 'join_waitlist',
+    });
+  };
+
   return (
     <motion.header
       animate={{
@@ -76,10 +90,11 @@ export function Navbar() {
           )}
           <a
             href="#descargar"
+            onClick={() => handleWaitlistClick('navbar_desktop')}
             className="inline-flex items-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors">
             
-            <Download className="w-4 h-4" />
-            Descargar
+            <ArrowRight className="w-4 h-4" />
+            Probar
           </a>
         </div>
 
@@ -122,7 +137,10 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMobileOpen(false)}
+              onClick={() => {
+                if (link.href === '#descargar') handleWaitlistClick('navbar_mobile');
+                setMobileOpen(false);
+              }}
               className="text-sm font-medium text-finper-dark/80">
               
                   {link.label}
