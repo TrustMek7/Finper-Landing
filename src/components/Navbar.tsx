@@ -34,6 +34,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrollY } = useScroll();
+  const elevated = scrolled || mobileOpen;
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setScrolled(latest > 12);
   });
@@ -65,104 +66,114 @@ export function Navbar() {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${mobileOpen ? 'bg-finper-dark/85 backdrop-blur-lg shadow-lg shadow-finper-dark/10' : 'bg-transparent'}`}>
+    <motion.header
+      animate={{
+        y: mobileOpen ? 0 : -8,
+        opacity: mobileOpen ? 1 : scrolled ? 1 : 0.98,
+      }}
+      transition={{
+        duration: 0.3,
+        ease: [0.22, 1, 0.36, 1]
+      }}
+      className="fixed top-3 left-0 right-0 z-50 px-3 sm:px-4 pointer-events-none">
 
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16">
-        <a href="#top" className="flex items-center gap-2 shrink-0">
-          <div className="w-11 h-11 rounded-2xl overflow-hidden flex items-center justify-center">
-            <img
-              src="/Logo.jpeg"
-              alt="Logo de FinPer"
-              className="w-full h-full object-contain" />
-          </div>
-          <span className="font-extrabold text-lg tracking-tight text-finper-dark">
-            FinPer
-          </span>
-        </a>
+      <div
+        className={`pointer-events-auto max-w-6xl mx-auto overflow-hidden rounded-full border transition-colors duration-300 ${elevated ? 'border-white/70 bg-white/80 shadow-lg shadow-finper-dark/10 backdrop-blur-xl' : 'border-white/20 bg-white/10 backdrop-blur-md'}`}>
+        <nav className="flex items-center justify-between px-5 sm:px-8 h-16">
+          <a href="#top" className="flex items-center gap-2 shrink-0">
+            <div className="w-11 h-11 rounded-2xl overflow-hidden flex items-center justify-center">
+              <img
+                src="/Logo.jpeg"
+                alt="Logo de FinPer"
+                className="w-full h-full object-contain" />
+            </div>
+            <span className="font-extrabold text-lg tracking-tight text-finper-dark">
+              FinPer
+            </span>
+          </a>
 
-        <div
-          className={`hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2 rounded-full transition-all duration-300 pointer-events-none ${scrolled ? 'bg-white/80 backdrop-blur-lg shadow-lg shadow-finper-dark/10 px-7 py-2.5' : 'px-0 py-0'}`}>
-          {NAV_LINKS.map((link) =>
-          <a
-            key={link.href}
-            href={link.href}
-            className="pointer-events-auto text-sm font-medium text-finper-dark/70 transition-colors hover:text-finper-accent">
-
-              {link.label}
-            </a>
-          )}
-        </div>
-
-        <a
-          href="#descargar"
-          onClick={() => handleWaitlistClick('navbar_desktop')}
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors shrink-0">
-
-          <ArrowRight className="w-4 h-4" />
-          Probar
-        </a>
-
-        <button
-          aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
-          onClick={() => setMobileOpen((o) => !o)}
-          className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${mobileOpen ? 'text-white' : 'text-finper-dark'}`}>
-
-          {mobileOpen ?
-          <X className="w-6 h-6" /> :
-
-          <Menu className="w-6 h-6" />
-          }
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {mobileOpen &&
-        <motion.div
-          initial={{
-            opacity: 0,
-            height: 0
-          }}
-          animate={{
-            opacity: 1,
-            height: 'auto'
-          }}
-          exit={{
-            opacity: 0,
-            height: 0
-          }}
-          transition={{
-            duration: 0.25,
-            ease: [0.22, 1, 0.36, 1]
-          }}
-          className="md:hidden bg-finper-dark/95 backdrop-blur-lg border-t border-white/10 overflow-hidden">
-
-            <div className="flex flex-col px-5 py-4 gap-4">
-              {NAV_LINKS.map((link) =>
+          <div className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2 rounded-full transition-all duration-300 pointer-events-none">
+            {NAV_LINKS.map((link) =>
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => handleMobileNav(e, link.href)}
-              className="text-sm font-medium text-white/80 hover:text-finper-accent transition-colors">
+              className="pointer-events-auto text-sm font-medium text-finper-dark/70 transition-colors hover:text-finper-accent">
 
-                  {link.label}
-                </a>
-            )}
-              <a
-              href="#descargar"
-              onClick={(e) => {
-                handleWaitlistClick('navbar_mobile');
-                handleMobileNav(e, '#descargar');
-              }}
-              className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors">
-
-                <ArrowRight className="w-4 h-4" />
-                Probar
+                {link.label}
               </a>
-            </div>
-          </motion.div>
-        }
-      </AnimatePresence>
-    </header>);
+            )}
+          </div>
+
+          <a
+            href="#descargar"
+            onClick={() => handleWaitlistClick('navbar_desktop')}
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors shrink-0">
+
+            <ArrowRight className="w-4 h-4" />
+            Probar
+          </a>
+
+          <button
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setMobileOpen((o) => !o)}
+            className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${mobileOpen ? 'text-white' : 'text-finper-dark'}`}>
+
+            {mobileOpen ?
+            <X className="w-6 h-6" /> :
+
+            <Menu className="w-6 h-6" />
+            }
+          </button>
+        </nav>
+
+        <AnimatePresence>
+          {mobileOpen &&
+          <motion.div
+            initial={{
+              opacity: 0,
+              height: 0
+            }}
+            animate={{
+              opacity: 1,
+              height: 'auto'
+            }}
+            exit={{
+              opacity: 0,
+              height: 0
+            }}
+            transition={{
+              duration: 0.25,
+              ease: [0.22, 1, 0.36, 1]
+            }}
+            className="md:hidden bg-finper-dark/95 backdrop-blur-lg border-t border-white/10 overflow-hidden">
+
+              <div className="flex flex-col px-5 py-4 gap-4">
+                {NAV_LINKS.map((link) =>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleMobileNav(e, link.href)}
+                className="text-sm font-medium text-white/80 hover:text-finper-accent transition-colors">
+
+                    {link.label}
+                  </a>
+              )}
+                <a
+                href="#descargar"
+                onClick={(e) => {
+                  handleWaitlistClick('navbar_mobile');
+                  handleMobileNav(e, '#descargar');
+                }}
+                className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors">
+
+                  <ArrowRight className="w-4 h-4" />
+                  Probar
+                </a>
+              </div>
+            </motion.div>
+          }
+        </AnimatePresence>
+      </div>
+    </motion.header>);
 
 }
