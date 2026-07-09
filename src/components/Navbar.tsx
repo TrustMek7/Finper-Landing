@@ -49,6 +49,21 @@ export function Navbar() {
     });
   };
 
+  // En móvil, cerrar el menú interrumpe el scroll por defecto del ancla,
+  // así que lo hacemos de forma controlada.
+  const handleMobileNav = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string) =>
+  {
+    e.preventDefault();
+    setMobileOpen(false);
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', href);
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${mobileOpen ? 'bg-finper-dark/85 backdrop-blur-lg shadow-lg shadow-finper-dark/10' : 'bg-transparent'}`}>
@@ -67,12 +82,12 @@ export function Navbar() {
         </a>
 
         <div
-          className={`hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2 rounded-full transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-lg shadow-lg shadow-finper-dark/10 px-7 py-2.5' : 'px-0 py-0'}`}>
+          className={`hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2 rounded-full transition-all duration-300 pointer-events-none ${scrolled ? 'bg-white/80 backdrop-blur-lg shadow-lg shadow-finper-dark/10 px-7 py-2.5' : 'px-0 py-0'}`}>
           {NAV_LINKS.map((link) =>
           <a
             key={link.href}
             href={link.href}
-            className="text-sm font-medium text-finper-dark/70 transition-colors hover:text-finper-accent">
+            className="pointer-events-auto text-sm font-medium text-finper-dark/70 transition-colors hover:text-finper-accent">
 
               {link.label}
             </a>
@@ -127,7 +142,7 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleMobileNav(e, link.href)}
               className="text-sm font-medium text-white/80 hover:text-finper-accent transition-colors">
 
                   {link.label}
@@ -135,9 +150,9 @@ export function Navbar() {
             )}
               <a
               href="#descargar"
-              onClick={() => {
+              onClick={(e) => {
                 handleWaitlistClick('navbar_mobile');
-                setMobileOpen(false);
+                handleMobileNav(e, '#descargar');
               }}
               className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors">
 

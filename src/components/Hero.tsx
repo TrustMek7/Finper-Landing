@@ -41,7 +41,7 @@ export function Hero() {
           
           <span className="inline-flex items-center gap-2 rounded-full bg-finper-primary/10 px-4 py-1.5 text-xs font-semibold text-finper-primary mb-6">
             <Sparkles className="w-3.5 h-3.5" />
-            Hecho en Perú, con IA
+            Hecho en Perú
           </span>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-finper-dark leading-[1.08] tracking-tight">
