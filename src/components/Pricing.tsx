@@ -82,7 +82,7 @@ export function Pricing() {
               </p>
               <div className="mt-6 flex items-baseline gap-1">
                 <span className="text-4xl font-extrabold text-white">
-                  S/9.90
+                  S/29.90
                 </span>
                 <span className="text-sm text-white/50">/mes</span>
               </div>
