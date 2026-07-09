@@ -41,7 +41,7 @@ const SHOWCASE = [
 
 export function Mockups() {
   return (
-    <section className="bg-finper-dark py-24 overflow-hidden">
+    <section id="app" className="bg-finper-dark py-24 overflow-hidden">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <FadeInSection className="text-center max-w-2xl mx-auto mb-20">
           <span className="text-xs font-semibold uppercase tracking-widest text-finper-accent">

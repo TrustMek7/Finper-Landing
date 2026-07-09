@@ -21,7 +21,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="bg-finper-bg py-24">
+    <section id="como-funciona" className="bg-finper-bg py-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <FadeInSection className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs font-semibold uppercase tracking-widest text-finper-primary">
