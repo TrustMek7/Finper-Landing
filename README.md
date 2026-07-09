@@ -29,6 +29,7 @@ src/
 │   ├── Navbar.tsx
 │   ├── Hero.tsx
 │   ├── Stats.tsx
+│   ├── ValidationMetrics.tsx
 │   ├── Features.tsx
 │   ├── Mockups.tsx
 │   ├── HowItWorks.tsx
@@ -38,12 +39,15 @@ src/
 │   ├── PhoneMockup.tsx
 │   ├── FadeInSection.tsx
 │   └── AnimatedCounter.tsx
+├── lib/
+│   ├── analytics.ts
+│   └── plans.ts
 ├── App.tsx
 └── index.tsx
 public/            # capturas de la app y logo
 ```
 
-Secciones de la página: Navbar · Hero · Stats · Features · Mockups (capturas de la app) · How it works · Pricing · CTA · Footer.
+Secciones de la página: Navbar · Hero · Stats · Validación de la idea · Features · Mockups (capturas de la app) · How it works · Pricing · CTA/lista de espera · Footer.
 
 ---
 
@@ -61,6 +65,42 @@ Secciones de la página: Navbar · Hero · Stats · Features · Mockups (captura
    ```
    npm run build
    ```
+4. Ejecutar lint:
+   ```
+   npm run lint
+   ```
+
+---
+
+## Validación de mercado
+
+La landing se usa como herramienta de validación antes de construir o escalar el MVP. Las métricas principales a medir son:
+
+- Visitas totales y usuarios únicos.
+- Clics en CTA y registros en lista de espera.
+- Tasa de conversión entre visita, clic y registro.
+- Fuente de tráfico y dispositivo usado.
+- Tiempo en página y profundidad de scroll.
+
+La utilidad `src/lib/analytics.ts` deja preparados estos eventos para conectar luego Google Analytics, Vercel Analytics, Umami, Plausible, Supabase, Tally o Google Forms:
+
+- `cta_click`: clics en CTAs principales, navegación y formulario.
+- `waitlist_submit`: envío del formulario de lista de espera.
+- `feature_interest`: clics en funcionalidades o enlaces hacia características.
+- `pricing_click`: clic en una card/CTA de precios.
+- `plan_selected`: selección de plan desde precios o formulario.
+- `download_click`: clics históricos de descargar/probar, ahora orientados a lista de espera.
+- `mockup_click`: interacción con capturas de la app.
+- `scroll_depth`: avance de scroll al 25%, 50%, 75% y 90%.
+- `page_engagement`: tiempo en página y scroll máximo al salir.
+
+## Planes de validación
+
+Los precios no procesan pagos reales desde la landing; son una propuesta inicial para medir interés y disposición de pago.
+
+- **Free — S/ 0:** valida adopción inicial y reduce la barrera de entrada para usuarios con bajos ingresos. Incluye registro básico, offline, categorías principales, resumen mensual básico, 1 meta de ahorro y datos locales.
+- **Básico — S/ 9.90 / mes:** plan recomendado para validar monetización individual. El precio es bajo y razonable para trabajadores independientes o personas con ingresos variables, similar a un gasto cotidiano pequeño, sin alejar al público objetivo.
+- **Emprendedor — S/ 29.90 / mes:** valida valor para pequeños negocios. El precio se justifica por separación de finanzas personales/negocio, múltiples cajas, reportes más completos, historial ampliado y soporte inicial.
 
 ---
 

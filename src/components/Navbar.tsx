@@ -5,7 +5,9 @@ import {
   useScroll,
   useMotionValueEvent } from
 'framer-motion';
-import { Download, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
+
 const NAV_LINKS = [
 {
   label: 'El problema',
@@ -35,6 +37,18 @@ export function Navbar() {
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setScrolled(latest > 12);
   });
+
+  const handleWaitlistClick = (location: string) => {
+    trackEvent('cta_click', {
+      location,
+      label: 'Unirme a la lista de espera',
+    });
+    trackEvent('download_click', {
+      location,
+      action: 'join_waitlist',
+    });
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${mobileOpen ? 'bg-finper-dark/85 backdrop-blur-lg shadow-lg shadow-finper-dark/10' : 'bg-transparent'}`}>
@@ -67,17 +81,18 @@ export function Navbar() {
 
         <a
           href="#descargar"
+          onClick={() => handleWaitlistClick('navbar_desktop')}
           className="hidden md:inline-flex items-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors shrink-0">
 
-          <Download className="w-4 h-4" />
-          Descargar
+          <ArrowRight className="w-4 h-4" />
+          Probar
         </a>
 
         <button
           aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
           onClick={() => setMobileOpen((o) => !o)}
           className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${mobileOpen ? 'text-white' : 'text-finper-dark'}`}>
-          
+
           {mobileOpen ?
           <X className="w-6 h-6" /> :
 
@@ -120,11 +135,14 @@ export function Navbar() {
             )}
               <a
               href="#descargar"
-              onClick={() => setMobileOpen(false)}
+              onClick={() => {
+                handleWaitlistClick('navbar_mobile');
+                setMobileOpen(false);
+              }}
               className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-finper-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-finper-accent transition-colors">
 
-                <Download className="w-4 h-4" />
-                Descargar
+                <ArrowRight className="w-4 h-4" />
+                Probar
               </a>
             </div>
           </motion.div>

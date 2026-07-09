@@ -22,7 +22,7 @@ const LINKS = [
   href: '#precios'
 },
 {
-  label: 'Descargar',
+  label: 'Lista de espera',
   href: '#descargar'
 }];
 
